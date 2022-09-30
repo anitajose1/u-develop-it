@@ -21,9 +21,21 @@ const db = mysql.createConnection(
     console.log('Connected to the election database')
 )
 
-// db.query(`SELECT * FROM candidates`, (err, rows) => {
-//     console.log(rows);
-// })
+// Get all candidates
+app.get('/api/candidates', (req, res) => {
+    const sql = `SELECT * FROM candidates`
+
+    db.query(sql, (err, rows) => {
+        if (err) {
+            res.status(500).json({ error: err.message})
+            return
+        }
+        res.json({
+            message: 'success',
+            data: rows
+        })
+    })
+})
 
 // GET a single candidate
 // db.query(`SELECT * FROM candidates WHERE id = 1`, (err, row) => {
